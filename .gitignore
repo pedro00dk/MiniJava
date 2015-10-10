@@ -1,0 +1,6 @@
+# Arquivos de configurações de projeto do intelliJ IDEA
+
+#*.iml
+#.idea/
+.idea/tasks.xml
+.idea/workspace.xml
