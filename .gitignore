@@ -4,3 +4,5 @@
 #.idea/
 .idea/tasks.xml
 .idea/workspace.xml
+
+out/
