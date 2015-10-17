@@ -1,0 +1,63 @@
+package miniJava.parser;
+
+import java_cup.runtime.*;
+
+// Imports adicionados
+import java.io.IOException;
+import java.nio.file.Path;
+import miniJava.lexer.Lexer;
+
+parser code {:
+
+    // Salvando lexer e o arquivo como objetos da classe
+    private Lexer lexer;
+
+    // Salvando arquivo, talvez para algum futuro uso
+    private Path file;
+
+    // Criando novo construtor onde é possivel setar um arquivo para ser analizado
+    public Parser(Path file) throws IOException {
+
+        // Salvando refrencia do arquivo
+        this.file = file;
+
+        // Criando um gerador de simbolos que sera salva na superclasse do lexer e no parser
+        // (não sei o porque de salvar no lexer)
+        ComplexSymbolFactory symbolFactory = new ComplexSymbolFactory();
+
+        // Superclasse lr_parser contem este atributo
+        super.symbolFactory = symbolFactory;
+
+        // Inicializando o lexer com o arquivo recebido e o gerador de simbolos
+        // Construtor abaixo descrito na especificação do lexer
+        // Tambem pode lançar execessão, que deve ser capturada ou lançar novamente por esse construtor
+        this.lexer = new Lexer(file, symbolFactory);
+    }
+:}
+
+init with {:
+:};
+
+scan with {:
+    // Função de scanner que é criada automaticamente pela integração do jflex com o cup na especificação do lexer
+    return lexer.next_token();
+:};
+
+
+// Definição de terminais
+terminal CLASS, PUBLIC, EXTENDS, STATIC, VOID, INT, BOOLEAN, WHILE, IF, ELSE, RETURN, THIS, NEW,
+         SEMICOLON, DOT, COMMA, ASSIGN, O_PAR, C_PAR, O_BRAC, C_BRAC, O_BRACK, C_BRACK,
+         OR, AND, EQUALS, DIFF, LESS, LESS_EQ, GREATER, GREATER_EQ, PLUS, MINUS, TIMES, SLASH, PERCENT, OPP;
+
+terminal Boolean FALSE, TRUE;
+
+terminal Integer INTEGER;
+
+terminal Double FLOAT;
+
+terminal String ID;
+
+non terminal Integer goal;
+
+goal ::=
+        ;
