@@ -5,6 +5,7 @@ import java_cup.runtime.*;
 // Imports adicionados
 import java.io.IOException;
 import java.nio.file.Path;
+import miniJava.astree.*;
 import miniJava.lexer.Lexer;
 
 parser code {:
@@ -48,16 +49,147 @@ scan with {:
 terminal CLASS, PUBLIC, EXTENDS, STATIC, VOID, INT, BOOLEAN, WHILE, IF, ELSE, RETURN, THIS, NEW,
          SEMICOLON, DOT, COMMA, ASSIGN, O_PAR, C_PAR, O_BRAC, C_BRAC, O_BRACK, C_BRACK,
          OR, AND, EQUALS, DIFF, LESS, LESS_EQ, GREATER, GREATER_EQ, PLUS, MINUS, TIMES, SLASH, PERCENT, OPP;
-
 terminal Boolean FALSE, TRUE;
-
 terminal Integer INTEGER;
-
 terminal Double FLOAT;
-
 terminal String ID;
 
-non terminal Integer goal;
+// Terminais do main, println e length
+terminal MAIN, PRINTLN, LENGTH;
 
-goal ::=
-        ;
+// Definição dos não terminais (deve haver uma classe da arvore sintática abstrata para cada não terminal)
+non terminal Program prog;
+non terminal MainClassDecl mClass;
+non terminal ClassDeclList classList;
+non terminal ClassDecl clas;
+non terminal Extends ext;
+non terminal VariableDeclList varList;
+non terminal VariableDecl var;
+non terminal MethodDeclList methodList;
+non terminal MethodDecl method;
+non terminal ParameterList paramList;
+non terminal Parameters params;
+non terminal Parameter param;
+non terminal DataType type;
+non terminal Statement stmt;
+non terminal Expression expr;
+non terminal ArgumentList argList;
+non terminal Arguments args;
+
+// Regras de precedencia
+
+// Atribuição associa a direita
+precedence right ASSIGN;
+
+// And e or associam a esquerda sempre, como operações quaisquer
+precedence left AND, OR;
+
+// Já o operador de negação associa a direita
+precedence right OPP;
+
+// Operações de comparação associam a esquerda
+precedence left EQUALS, DIFF, LESS, LESS_EQ, GREATER, GREATER_EQ;
+
+// Associa acima e a esquerda operações de soma e subtração
+precedence left PLUS, MINUS;
+// Associa a esquerda apos operações de soma e subtração, pus mod no mesmo nivel de divisão
+precedence left TIMES, SLASH, PERCENT;
+
+// New associa com o tipo a sua direita
+precedence right NEW;
+
+// IDs não associam
+precedence nonassoc ID;
+
+// Ponto é referencia, então associa a esquerda sempre
+precedence left DOT;
+
+// Gramática
+
+prog        ::= mClass classList
+            ;
+
+mClass      ::= CLASS ID O_BRAC PUBLIC STATIC VOID MAIN O_PAR ID O_BRACK C_BRACK ID C_PAR O_BRAC stmt C_BRAC C_BRAC
+            ;
+
+classList   ::= clas classList
+                |
+            ;
+
+clas        ::= CLASS ID O_PAR ext O_BRAC varList methodList C_BRAC
+            ;
+
+ext     ::= EXTENDS ID
+                |
+            ;
+
+varList     ::= var varList
+                |
+            ;
+
+var         ::= type ID SEMICOLON
+            ;
+
+methodList  ::= method methodList
+                |
+            ;
+
+method      ::= PUBLIC type ID O_PAR paramList C_PAR O_BRAC varList stmt RETURN expr SEMICOLON C_BRAC
+            ;
+
+paramList   ::= params
+                |
+            ;
+
+params      ::= param COMMA params
+                | param
+            ;
+
+param       ::= type ID
+            ;
+
+type        ::= INT | INT O_BRACK C_BRACK | BOOLEAN | ID
+            ;
+
+stmt        ::= O_BRAC stmt C_BRAC
+                | IF O_PAR expr C_PAR stmt ELSE stmt
+                | WHILE O_PAR expr C_PAR stmt
+                | PRINTLN O_PAR expr C_PAR SEMICOLON
+                | ID ASSIGN expr SEMICOLON
+                | ID O_BRACK expr C_BRACK ASSIGN expr SEMICOLON
+            ;
+
+expr        ::= expr OR expr
+                | expr AND expr
+                | expr EQUALS expr
+                | expr DIFF expr
+                | expr LESS expr
+                | expr LESS_EQ expr
+                | expr GREATER expr
+                | expr GREATER_EQ expr
+                | expr PLUS expr
+                | expr MINUS expr
+                | expr TIMES expr
+                | expr SLASH expr
+                | expr PERCENT expr
+                | OPP expr
+                | expr O_BRACK expr C_BRACK
+                | expr DOT LENGTH
+                | expr DOT ID O_PAR argList C_PAR
+                | INTEGER
+                | FALSE
+                | TRUE
+                | ID
+                | THIS
+                | NEW INT O_BRACK expr C_BRACK
+                | NEW ID O_PAR C_PAR
+                | O_PAR expr C_PAR
+            ;
+
+argList     ::= args
+                |
+            ;
+
+args        ::= expr COMMA args
+                | expr
+            ;

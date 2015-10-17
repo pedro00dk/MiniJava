@@ -88,6 +88,10 @@ new {return symbolFactory.newSymbol(yytext(), NEW);}
 false {return symbolFactory.newSymbol(yytext(), FALSE, false);}
 true {return symbolFactory.newSymbol(yytext(), TRUE, true);}
 
+main {return symbolFactory.newSymbol(yytext(), MAIN);}
+system\.out\.println {return symbolFactory.newSymbol(yytext(), PRINTLN);}
+length {return symbolFactory.newSymbol(yytext(), LENGTH);}
+
 ; {return symbolFactory.newSymbol(yytext(), SEMICOLON);}
 \. {return symbolFactory.newSymbol(yytext(), DOT);}
 , {return symbolFactory.newSymbol(yytext(), COMMA);}
