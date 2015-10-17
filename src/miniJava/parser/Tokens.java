@@ -14,6 +14,7 @@ public interface Tokens {
   public static final int INTEGER = 41;
   public static final int GREATER = 31;
   public static final int INT = 7;
+  public static final int PRINTLN = 45;
   public static final int C_BRAC = 22;
   public static final int LESS = 29;
   public static final int MINUS = 34;
@@ -25,6 +26,7 @@ public interface Tokens {
   public static final int COMMA = 17;
   public static final int CLASS = 2;
   public static final int PLUS = 33;
+  public static final int MAIN = 44;
   public static final int ASSIGN = 18;
   public static final int IF = 10;
   public static final int THIS = 13;
@@ -51,6 +53,7 @@ public interface Tokens {
   public static final int DIFF = 28;
   public static final int OPP = 38;
   public static final int FALSE = 39;
+  public static final int LENGTH = 46;
   public static final int GREATER_EQ = 32;
   public static final String[] terminalNames = new String[] {
   "EOF",
@@ -96,7 +99,10 @@ public interface Tokens {
   "TRUE",
   "INTEGER",
   "FLOAT",
-  "ID"
+  "ID",
+  "MAIN",
+  "PRINTLN",
+  "LENGTH"
   };
 }
 
