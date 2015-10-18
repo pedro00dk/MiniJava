@@ -1,4 +1,4 @@
 package miniJava.astree;
 
-public class Expression implements Node {
+public interface Expression extends Node {
 }

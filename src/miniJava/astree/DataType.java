@@ -1,4 +1,4 @@
 package miniJava.astree;
 
-public class DataType implements Node {
+public interface DataType extends Node {
 }

@@ -1,4 +1,4 @@
 package miniJava.astree;
 
-public class Statement implements Node {
+public interface Statement extends Node {
 }
