@@ -1,4 +1,4 @@
-package miniJava.astree.dataType;
+package miniJava.astree.objectType;
 
 import miniJava.astree.DataType;
 

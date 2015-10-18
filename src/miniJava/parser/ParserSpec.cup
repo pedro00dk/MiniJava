@@ -6,7 +6,8 @@ import java_cup.runtime.*;
 import java.io.IOException;
 import java.nio.file.Path;
 import miniJava.astree.*;
-import miniJava.astree.dataType.*;
+import miniJava.astree.objectType.*;
+import miniJava.astree.primitiveType.*;
 import miniJava.astree.expression.*;
 import miniJava.astree.expression.booleanExpr.*;
 import miniJava.astree.expression.integerExpr.*;
@@ -75,7 +76,7 @@ non terminal MethodDecl method;
 non terminal ParameterList paramList;
 non terminal Parameters params;
 non terminal Parameter param;
-non terminal DataType type;
+non terminal PrimitiveType type;
 non terminal StatementList stmtList;
 non terminal Statement stmt;
 non terminal Expression expr;
@@ -155,17 +156,18 @@ params      ::= param:p COMMA params:ps                                 {:RESULT
             ;
 
 param       ::= type:t ID:n                                             {:RESULT = new Parameter(t, n);:}
+                | ID:t ID:n                                             {:RESULT = new Parameter(new IdentifierType(t), n);:}
             ;
 
 type        ::= INT                                                     {:RESULT = new IntegerType();:}
                 | INT O_BRACK C_BRACK                                   {:RESULT = new IntegerArrayType();:}
                 | BOOLEAN                                               {:RESULT = new BooleanType();:}
-                | ID:t                                                  {:RESULT = new IdentifierType(t);:}
             ;
 
 stmtList    ::= stmt:s stmtList:sl                                      {:RESULT = new StatementList(s, sl);:}
                 |                                                       {:RESULT = null;:}
             ;
+
 stmt        ::= O_BRAC stmtList:s C_BRAC                                {:RESULT = new BraceStatement(s);:}
                 | IF O_PAR expr:c C_PAR stmtList:i ELSE stmtList:e      {:RESULT = new IfElseStatement(c, i, e);:}
                 | WHILE O_PAR expr:e C_PAR stmtList:s                   {:RESULT = new WhileStatement(e, s);:}
