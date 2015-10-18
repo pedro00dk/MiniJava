@@ -160,10 +160,10 @@ param       ::= type:t ID:n                                             {:RESULT
 type        ::= INT                                                     {:RESULT = new IntegerType();:}
                 | INT O_BRACK C_BRACK                                   {:RESULT = new IntegerArrayType();:}
                 | BOOLEAN                                               {:RESULT = new BooleanType();:}
-                | ID                                                    {:RESULT = new IdentifierType();:}
+                | ID:t                                                  {:RESULT = new IdentifierType(t);:}
             ;
 
-stmtList    ::= stmt:s stmtList:sl                                    {:RESULT = new StatementList(s, sl);:}
+stmtList    ::= stmt:s stmtList:sl                                      {:RESULT = new StatementList(s, sl);:}
                 |                                                       {:RESULT = null;:}
             ;
 stmt        ::= O_BRAC stmtList:s C_BRAC                                {:RESULT = new BraceStatement(s);:}

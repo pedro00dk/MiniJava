@@ -747,7 +747,10 @@ class CUP$Parser$actions {
           case 22: // type ::= ID 
             {
               DataType RESULT =null;
-		RESULT = new IdentifierType();
+		int tleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
+		int tright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
+		String t = (String)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
+		RESULT = new IdentifierType(t);
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("type",12, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
