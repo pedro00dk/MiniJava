@@ -89,7 +89,7 @@ false {return symbolFactory.newSymbol(yytext(), FALSE, false);}
 true {return symbolFactory.newSymbol(yytext(), TRUE, true);}
 
 main {return symbolFactory.newSymbol(yytext(), MAIN);}
-system\.out\.println {return symbolFactory.newSymbol(yytext(), PRINTLN);}
+System\.out\.println {return symbolFactory.newSymbol(yytext(), PRINTLN);}
 length {return symbolFactory.newSymbol(yytext(), LENGTH);}
 
 ; {return symbolFactory.newSymbol(yytext(), SEMICOLON);}
