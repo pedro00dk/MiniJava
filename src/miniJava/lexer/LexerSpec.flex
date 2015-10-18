@@ -91,6 +91,7 @@ true {return symbolFactory.newSymbol(yytext(), TRUE, true);}
 main {return symbolFactory.newSymbol(yytext(), MAIN);}
 System\.out\.println {return symbolFactory.newSymbol(yytext(), PRINTLN);}
 length {return symbolFactory.newSymbol(yytext(), LENGTH);}
+String\[\] {return symbolFactory.newSymbol(yytext(), STRGARG);}
 
 ; {return symbolFactory.newSymbol(yytext(), SEMICOLON);}
 \. {return symbolFactory.newSymbol(yytext(), DOT);}

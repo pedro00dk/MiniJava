@@ -63,6 +63,9 @@ terminal String ID;
 // Terminais do main, println e length
 terminal MAIN, PRINTLN, LENGTH;
 
+// Novo terminal do argumento String do main
+terminal STRGARG;
+
 // Definição dos não terminais (deve haver uma classe da arvore sintática abstrata para cada não terminal)
 non terminal Program prog;
 non terminal MainClassDecl mClass;
@@ -116,7 +119,7 @@ precedence left DOT;
 prog        ::= mClass:m classList:cl                                   {:RESULT = new Program(m, cl);:}
             ;
 
-mClass      ::= CLASS ID:n O_BRAC PUBLIC STATIC VOID MAIN O_PAR ID O_BRACK C_BRACK ID C_PAR O_BRAC stmtList:b C_BRAC C_BRAC
+mClass      ::= CLASS ID:n O_BRAC PUBLIC STATIC VOID MAIN O_PAR STRGARG ID C_PAR O_BRAC stmtList:b C_BRAC C_BRAC
                                                                         {:RESULT = new MainClassDecl(n, b);:}
             ;
 

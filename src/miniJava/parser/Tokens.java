@@ -15,6 +15,7 @@ public interface Tokens {
   public static final int GREATER = 31;
   public static final int INT = 7;
   public static final int PRINTLN = 45;
+  public static final int STRGARG = 47;
   public static final int C_BRAC = 22;
   public static final int LESS = 29;
   public static final int MINUS = 34;
@@ -102,7 +103,8 @@ public interface Tokens {
   "ID",
   "MAIN",
   "PRINTLN",
-  "LENGTH"
+  "LENGTH",
+  "STRGARG"
   };
 }
 
