@@ -39,12 +39,13 @@ public class Gen {
      * @param spec especificação do parser (*.cup)
      * @param dest pasta de destino
      */
-    public static void genParser(Path spec, Path dest, String parserClassName, String symbolClassName) {
+    public static void genParser(Path spec, Path dest, String parserClassName, String symbolClassName, int conflicts) {
 
         try {
             // Setando atributos
             java_cup.Main.main(new String[]{"-parser", parserClassName, "-interface", "-symbols", symbolClassName,
-                    "-destdir", dest.toAbsolutePath().toString(), spec.toAbsolutePath().toString()});
+                    "-destdir", dest.toAbsolutePath().toString(), "-expect", Integer.toString(conflicts),
+                    spec.toAbsolutePath().toString()});
 
         } catch (Exception e) {
             e.printStackTrace();
