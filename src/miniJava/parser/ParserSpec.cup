@@ -201,6 +201,8 @@ expr        ::= expr:l OR expr:r                                        {:RESULT
                 | NEW INT O_BRACK expr:s C_BRACK                        {:RESULT = new IntegerArrayCreationExpression(s);:}
                 | NEW ID:n O_PAR C_PAR                                  {:RESULT = new ObjectCreationExpression(n);:}
                 | O_PAR expr:e C_PAR                                    {:RESULT = new AssocExpression(e);:}
+                | expr:e INTEGER:i                                      {:if(i < 0) RESULT = new BinaryIntegerExpression(e, BinaryIntegerExpression.Operator.MINUS, new LiteralIntegerExpression(-i));
+                                                                                  else throw new UnsupportedOperationException();:}
             ;
 
 argList     ::= args:a                                                  {:RESULT = new ArgumentList(a);:}
