@@ -172,8 +172,8 @@ stmtList    ::= stmt:s stmtList:sl                                      {:RESULT
             ;
 
 stmt        ::= O_BRAC stmtList:s C_BRAC                                {:RESULT = new BraceStatement(s);:}
-                | IF O_PAR expr:c C_PAR stmtList:i ELSE stmtList:e      {:RESULT = new IfElseStatement(c, i, e);:}
-                | WHILE O_PAR expr:e C_PAR stmtList:s                   {:RESULT = new WhileStatement(e, s);:}
+                | IF O_PAR expr:c C_PAR stmt:i ELSE stmt:e              {:RESULT = new IfElseStatement(c, i, e);:}
+                | WHILE O_PAR expr:e C_PAR stmt:s                       {:RESULT = new WhileStatement(e, s);:}
                 | PRINTLN O_PAR expr:e C_PAR SEMICOLON                  {:RESULT = new PrintStatement(e);:}
                 | ID:v ASSIGN expr:e SEMICOLON                          {:RESULT = new AssignStatement(v, e);:}
                 | ID:v O_BRACK expr:i C_BRACK ASSIGN expr:e SEMICOLON   {:RESULT = new AssignArrayStatement(v, i, e);:}
