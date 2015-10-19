@@ -98,7 +98,7 @@ precedence left AND, OR;
 precedence right OPP;
 
 // Operações de comparação associam a esquerda
-precedence left EQUALS, DIFF, LESS, LESS_EQ, GREATER, GREATER_EQ;
+precedence nonassoc EQUALS, DIFF, LESS, LESS_EQ, GREATER, GREATER_EQ;
 
 // Associa acima e a esquerda operações de soma e subtração
 precedence left PLUS, MINUS;
