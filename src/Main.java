@@ -17,7 +17,7 @@ public class Main {
     static final Path TEST_FILES_DIR = Paths.get("test");
 
     public static void main(String[] args) throws Exception {
-        //gen();
+        gen();
 
         // Testando arquivos
         new Parser(Paths.get("test\\binarysearch.java.txt")).parse();
@@ -37,6 +37,6 @@ public class Main {
      */
     public static void gen() {
         Gen.genLexer(LEXER_SPEC_PATH, LEXER_SPEC_PATH.getParent());
-        Gen.genParser(PARSER_SPEC_PATH, PARSER_SPEC_PATH.getParent(), "Parser", "Tokens", 12);
+        Gen.genParser(PARSER_SPEC_PATH, PARSER_SPEC_PATH.getParent(), "Parser", "Tokens", 0);
     }
 }
