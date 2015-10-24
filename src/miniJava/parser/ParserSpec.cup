@@ -79,7 +79,7 @@ non terminal MethodDecl method;
 non terminal ParameterList paramList;
 non terminal Parameters params;
 non terminal Parameter param;
-non terminal PrimitiveType type;
+non terminal DataType type;
 non terminal StatementList stmtList;
 non terminal Statement stmt;
 non terminal Expression expr;
@@ -123,7 +123,7 @@ mClass      ::= CLASS ID:n O_BRAC PUBLIC STATIC VOID MAIN O_PAR STRGARG ID C_PAR
                                                                         {:RESULT = new MainClassDecl(n, b);:}
             ;
 
-classList   ::= clas:c classList:cl                                     {:RESULT = new ClassDeclList(c, cl);:}
+classList   ::= classList:cl clas:c                                     {:RESULT = new ClassDeclList(c, cl);:}
                 |                                                       {:RESULT = null;:}
             ;
 
@@ -135,14 +135,14 @@ ext         ::= EXTENDS ID:n                                            {:RESULT
                 |                                                       {:RESULT = null;:}
             ;
 
-varList     ::= var:v varList:vl                                        {:RESULT = new VariableDeclList(v, vl);:}
+varList     ::= varList:vl var:v                                        {:RESULT = new VariableDeclList(v, vl);:}
                 |                                                       {:RESULT = null;:}
             ;
 
 var         ::= type:t ID:n SEMICOLON                                   {:RESULT = new VariableDecl(t, n);:}
             ;
 
-methodList  ::= method:m methodList:ml                                  {:RESULT = new MethodDeclList(m, ml);:}
+methodList  ::= methodList:ml method:m                                  {:RESULT = new MethodDeclList(m, ml);:}
                 |                                                       {:RESULT = null;:}
             ;
 
@@ -154,17 +154,17 @@ paramList   ::= params:ps                                               {:RESULT
                 |                                                       {:RESULT = null;:}
             ;
 
-params      ::= param:p COMMA params:ps                                 {:RESULT = new Parameters(p, ps);:}
+params      ::= params:ps COMMA param:p                                 {:RESULT = new Parameters(p, ps);:}
                 | param:p                                               {:RESULT = new Parameters(p, null);:}
             ;
 
 param       ::= type:t ID:n                                             {:RESULT = new Parameter(t, n);:}
-                | ID:t ID:n                                             {:RESULT = new Parameter(new IdentifierType(t), n);:}
             ;
 
 type        ::= INT                                                     {:RESULT = new IntegerType();:}
                 | INT O_BRACK C_BRACK                                   {:RESULT = new IntegerArrayType();:}
                 | BOOLEAN                                               {:RESULT = new BooleanType();:}
+                | ID:t                                                  {:RESULT = new IdentifierType(t);:}
             ;
 
 stmtList    ::= stmt:s stmtList:sl                                      {:RESULT = new StatementList(s, sl);:}
@@ -212,6 +212,6 @@ argList     ::= args:a                                                  {:RESULT
                 |                                                       {:RESULT = new ArgumentList(null);:}
             ;
 
-args        ::= expr:a COMMA args:as                                    {:RESULT = new Arguments(a, as);:}
+args        ::= args:as COMMA expr:a                                    {:RESULT = new Arguments(a, as);:}
                 | expr:a                                                {:RESULT = new Arguments(a, null);:}
             ;
