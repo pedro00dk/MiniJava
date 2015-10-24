@@ -1,7 +1,6 @@
 import miniJava.parser.Parser;
 import miniJava.util.Gen;
 
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -17,7 +16,7 @@ public class Main {
     static final Path TEST_FILES_DIR = Paths.get("test");
 
     public static void main(String[] args) throws Exception {
-        gen();
+        //gen();
 
         // Testando arquivos
         new Parser(Paths.get("test\\binarysearch.java.txt")).parse();
@@ -25,11 +24,8 @@ public class Main {
         new Parser(Paths.get("test\\factorial.java.txt")).parse();
         new Parser(Paths.get("test\\linearsearch.java.txt")).parse();
         new Parser(Paths.get("test\\quicksort.java.txt")).parse();
-
-        // Arquivos dando erro no parsing
-        // Ultimo bug a corrigir, problema com atribuição após uma declaração de váriavel de um tipo objeto qualquer
-        //new Parser(Paths.get("test\\binarytree.java.txt")).parse();
-        //new Parser(Paths.get("test\\linkedlist.java.txt")).parse();
+        new Parser(Paths.get("test\\binarytree.java.txt")).parse();
+        new Parser(Paths.get("test\\linkedlist.java.txt")).parse();
     }
 
     /**
