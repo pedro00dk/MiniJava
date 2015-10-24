@@ -2,9 +2,13 @@
 
 Disciplina: Teoria e Implementação de Linguagens Computacionais
 
-Implementação de analizador léxico para a linguagem MiniJava, um subconjunto de Java.
+Implementação de compilador para a linguagem MiniJava, um subconjunto de Java.
 
-##Elementos Léxicos
+##Analise léxica
+
+###Elementos Léxicos
+
+O analisador léxico foi criado usando a biblioteca JFlex.
 
 * **Whitespace** - Espaços em branco, quebras de linha, tabulações e carriage return
 * **Comentários** - Qualquer texto entre /* e */
@@ -22,3 +26,8 @@ ponto. A parte fracionária, podemos incluir um expoente, seguindo os exemplos do
 léxica.
 
 *Obs.: Comentários e whitespace não tem significado algum, exceto para separar os tokens.*
+
+##Analise sintática
+
+O analisador sintático foi criado usando a biblioteca Java CUP, e foi integrado com o JFlex para usar
+os tokens lidos pelo analizador léxico.
