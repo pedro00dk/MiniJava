@@ -1,3 +1,4 @@
+import miniJava.ast.program.Program;
 import miniJava.parser.Parser;
 import miniJava.util.Gen;
 
@@ -6,7 +7,7 @@ import java.nio.file.Paths;
 
 public class Main {
 
-    // Caminho para as especificaï¿½ï¿½es do lexer a parser
+    // Caminho para as especificações do lexer a parser
     public static final Path LEXER_SPEC_PATH = Paths.get("src\\miniJava\\lexer\\LexerSpec.flex");
     public static final Path PARSER_SPEC_PATH = Paths.get("src\\miniJava\\parser\\ParserSpec.cup");
 
@@ -19,13 +20,16 @@ public class Main {
         //gen();
 
         // Testando arquivos
-        new Parser(Paths.get("test\\binarysearch.java.txt")).parse();
+        Program binarySearhProgram = (Program) new Parser(Paths.get("test\\binarysearch.java.txt")).parse().value;
+
+        /**
         new Parser(Paths.get("test\\bubblesort.java.txt")).parse();
         new Parser(Paths.get("test\\factorial.java.txt")).parse();
         new Parser(Paths.get("test\\linearsearch.java.txt")).parse();
         new Parser(Paths.get("test\\quicksort.java.txt")).parse();
         new Parser(Paths.get("test\\binarytree.java.txt")).parse();
         new Parser(Paths.get("test\\linkedlist.java.txt")).parse();
+        //*/
     }
 
     /**
