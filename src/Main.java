@@ -6,7 +6,7 @@ import java.nio.file.Paths;
 
 public class Main {
 
-    // Caminho para as especificações do lexer a parser
+    // Caminho para as especificaï¿½ï¿½es do lexer a parser
     public static final Path LEXER_SPEC_PATH = Paths.get("src\\miniJava\\lexer\\LexerSpec.flex");
     public static final Path PARSER_SPEC_PATH = Paths.get("src\\miniJava\\parser\\ParserSpec.cup");
 
