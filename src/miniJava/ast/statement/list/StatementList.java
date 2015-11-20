@@ -1,11 +1,12 @@
 package miniJava.ast.statement.list;
 
+import miniJava.ast.Node;
 import miniJava.ast.statement.Statement;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class StatementList {
+public class StatementList extends Node {
     private List<Statement> statements;
 
     public StatementList() {

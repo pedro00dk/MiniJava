@@ -11,4 +11,8 @@ public class ExtendedClassDecl extends SimpleClassDecl {
         super(className, attributes, methods);
         this.extendsClassName = extendsClassName;
     }
+
+    public Identifier getExtendsClassName() {
+        return extendsClassName;
+    }
 }

@@ -10,5 +10,13 @@ public class WhileStmt extends Statement {
         this.expr = expr;
         this.stmt = stmt;
     }
+
+    public Expression getExpr() {
+        return expr;
+    }
+
+    public Statement getStmt() {
+        return stmt;
+    }
 }
 

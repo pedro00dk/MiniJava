@@ -8,4 +8,8 @@ public class ArrayLengthExpr extends Expression {
     public ArrayLengthExpr(Expression array) {
         this.array = array;
     }
+
+    public Expression getArray() {
+        return array;
+    }
 }

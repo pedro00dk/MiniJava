@@ -12,4 +12,12 @@ public class Program extends Node {
         this.mainClass = mainClass;
         this.classes = classes;
     }
+
+    public MainClassDecl getMainClass() {
+        return mainClass;
+    }
+
+    public ClassDeclList getClasses() {
+        return classes;
+    }
 }

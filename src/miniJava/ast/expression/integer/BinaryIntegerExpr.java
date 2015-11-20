@@ -2,7 +2,7 @@ package miniJava.ast.expression.integer;
 
 import miniJava.ast.expression.Expression;
 
-public class BinaryIntegerExpr {
+public class BinaryIntegerExpr extends Expression {
     private Expression expr1;
     private Expression expr2;
     private BinaryIntegerOperation op;
@@ -13,8 +13,19 @@ public class BinaryIntegerExpr {
         this.op = op;
     }
 
-    enum BinaryIntegerOperation {
+    public enum BinaryIntegerOperation {
         PLUS, MINUS, MUL, DIV, MOD
     }
 
+    public Expression getExpr1() {
+        return expr1;
+    }
+
+    public Expression getExpr2() {
+        return expr2;
+    }
+
+    public BinaryIntegerOperation getOp() {
+        return op;
+    }
 }

@@ -11,5 +11,13 @@ public class AssignStmt extends Statement {
         this.id = id;
         this.assign = assign;
     }
+
+    public Identifier getId() {
+        return id;
+    }
+
+    public Expression getAssign() {
+        return assign;
+    }
 }
 

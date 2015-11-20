@@ -2,7 +2,7 @@ package miniJava.ast.expression.bool;
 
 import miniJava.ast.expression.Expression;
 
-public class BinaryBooleanExpr {
+public class BinaryBooleanExpr extends Expression {
     private Expression expr1;
     private Expression expr2;
     private BinaryBooleanOperation op;
@@ -13,7 +13,19 @@ public class BinaryBooleanExpr {
         this.op = op;
     }
 
-    enum BinaryBooleanOperation {
-        EQUALS, DIFF, LESS, LESS_THAN, GREATER, GREATER_THAN
+    public enum BinaryBooleanOperation {
+        AND, OR, EQUALS, DIFF, LESS, LESS_THAN, GREATER, GREATER_THAN
+    }
+
+    public Expression getExpr1() {
+        return expr1;
+    }
+
+    public Expression getExpr2() {
+        return expr2;
+    }
+
+    public BinaryBooleanOperation getOp() {
+        return op;
     }
 }

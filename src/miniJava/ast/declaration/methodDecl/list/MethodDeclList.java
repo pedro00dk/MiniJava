@@ -1,11 +1,12 @@
 package miniJava.ast.declaration.methodDecl.list;
 
+import miniJava.ast.Node;
 import miniJava.ast.declaration.methodDecl.MethodDecl;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MethodDeclList {
+public class MethodDeclList extends Node {
     private List<MethodDecl> methods;
 
     public MethodDeclList() {

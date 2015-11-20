@@ -24,4 +24,28 @@ public class MethodDecl extends Node {
         this.statements = statements;
         this.returnExpr = returnExpr;
     }
+
+    public Type getReturnType() {
+        return returnType;
+    }
+
+    public Identifier getName() {
+        return name;
+    }
+
+    public ArgumentList getArguments() {
+        return arguments;
+    }
+
+    public VarDeclList getVariables() {
+        return variables;
+    }
+
+    public StatementList getStatements() {
+        return statements;
+    }
+
+    public Expression getReturnExpr() {
+        return returnExpr;
+    }
 }

@@ -9,4 +9,8 @@ public class NewObjectExpr extends Expression {
     public NewObjectExpr(Identifier id) {
         this.id = id;
     }
+
+    public Identifier getId() {
+        return id;
+    }
 }

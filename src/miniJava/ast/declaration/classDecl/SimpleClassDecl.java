@@ -14,4 +14,16 @@ public class SimpleClassDecl extends ClassDecl {
         this.attributes = attributes;
         this.methods = methods;
     }
+
+    public Identifier getClassName() {
+        return className;
+    }
+
+    public VarDeclList getAttributes() {
+        return attributes;
+    }
+
+    public MethodDeclList getMethods() {
+        return methods;
+    }
 }

@@ -12,4 +12,12 @@ public class VarDecl extends Node {
         this.type = type;
         this.id = id;
     }
+
+    public Type getType() {
+        return type;
+    }
+
+    public Identifier getId() {
+        return id;
+    }
 }

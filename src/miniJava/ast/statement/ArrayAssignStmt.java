@@ -13,5 +13,17 @@ public class ArrayAssignStmt extends Statement {
         this.index = index;
         this.assign = assign;
     }
+
+    public Identifier getArray() {
+        return array;
+    }
+
+    public Expression getIndex() {
+        return index;
+    }
+
+    public Expression getAssign() {
+        return assign;
+    }
 }
 

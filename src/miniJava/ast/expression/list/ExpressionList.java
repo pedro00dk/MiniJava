@@ -1,11 +1,12 @@
 package miniJava.ast.expression.list;
 
+import miniJava.ast.Node;
 import miniJava.ast.expression.Expression;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ExpressionList {
+public class ExpressionList extends Node {
     private List<Expression> expressions;
 
     public ExpressionList() {

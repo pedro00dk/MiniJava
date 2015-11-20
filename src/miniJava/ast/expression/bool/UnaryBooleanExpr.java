@@ -2,7 +2,7 @@ package miniJava.ast.expression.bool;
 
 import miniJava.ast.expression.Expression;
 
-public class UnaryBooleanExpr {
+public class UnaryBooleanExpr extends Expression {
     private Expression expr;
     private UnaryBooleanOperation op;
 
@@ -11,7 +11,15 @@ public class UnaryBooleanExpr {
         this.op = op;
     }
 
-    enum UnaryBooleanOperation {
+    public enum UnaryBooleanOperation {
         OPPOSITE
+    }
+
+    public Expression getExpr() {
+        return expr;
+    }
+
+    public UnaryBooleanOperation getOp() {
+        return op;
     }
 }

@@ -8,4 +8,8 @@ public class IdentifierType extends Type {
     public IdentifierType(Identifier id) {
         this.id = id;
     }
+
+    public Identifier getId() {
+        return id;
+    }
 }

@@ -12,4 +12,12 @@ public class Argument extends Node {
         this.type = type;
         this.name = name;
     }
+
+    public Type getType() {
+        return type;
+    }
+
+    public Identifier getName() {
+        return name;
+    }
 }

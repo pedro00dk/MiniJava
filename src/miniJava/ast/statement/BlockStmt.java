@@ -8,5 +8,9 @@ public class BlockStmt extends Statement {
     public BlockStmt(StatementList stmts) {
         this.stmts = stmts;
     }
+
+    public StatementList getStmts() {
+        return stmts;
+    }
 }
 

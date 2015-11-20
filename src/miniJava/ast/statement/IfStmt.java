@@ -12,5 +12,17 @@ public class IfStmt extends Statement {
         this.ifStmt = ifStmt;
         this.elseStmt = elseStmt;
     }
+
+    public Expression getExpr() {
+        return expr;
+    }
+
+    public Statement getIfStmt() {
+        return ifStmt;
+    }
+
+    public Statement getElseStmt() {
+        return elseStmt;
+    }
 }
 

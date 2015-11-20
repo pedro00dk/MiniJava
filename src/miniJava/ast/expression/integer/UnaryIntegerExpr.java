@@ -2,7 +2,7 @@ package miniJava.ast.expression.integer;
 
 import miniJava.ast.expression.Expression;
 
-public class UnaryIntegerExpr {
+public class UnaryIntegerExpr extends Expression {
     private Expression expr;
     private UnaryIntegerOperation op;
 
@@ -11,7 +11,7 @@ public class UnaryIntegerExpr {
         this.op = op;
     }
 
-    enum UnaryIntegerOperation {
+    public enum UnaryIntegerOperation {
         NEGATE
     }
 }

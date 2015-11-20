@@ -8,4 +8,8 @@ public class PrintStmt extends Statement {
     public PrintStmt(Expression expr) {
         this.expr = expr;
     }
+
+    public Expression getExpr() {
+        return expr;
+    }
 }

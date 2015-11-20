@@ -8,4 +8,8 @@ public class IntegerLiteralExpr extends Expression {
     public IntegerLiteralExpr(int value) {
         this.value = value;
     }
+
+    public int getValue() {
+        return value;
+    }
 }

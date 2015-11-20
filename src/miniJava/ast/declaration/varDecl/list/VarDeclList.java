@@ -1,11 +1,12 @@
 package miniJava.ast.declaration.varDecl.list;
 
+import miniJava.ast.Node;
 import miniJava.ast.declaration.varDecl.VarDecl;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class VarDeclList {
+public class VarDeclList extends Node {
     private List<VarDecl> variables;
 
     public VarDeclList() {

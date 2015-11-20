@@ -1,11 +1,12 @@
 package miniJava.ast.declaration.classDecl.list;
 
+import miniJava.ast.Node;
 import miniJava.ast.declaration.classDecl.ClassDecl;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ClassDeclList {
+public class ClassDeclList extends Node {
     private List<ClassDecl> classes;
 
     public ClassDeclList() {

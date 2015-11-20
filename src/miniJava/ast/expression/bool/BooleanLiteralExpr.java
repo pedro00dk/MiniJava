@@ -8,4 +8,8 @@ public class BooleanLiteralExpr extends Expression {
     public BooleanLiteralExpr(boolean value) {
         this.value = value;
     }
+
+    public boolean isValue() {
+        return value;
+    }
 }

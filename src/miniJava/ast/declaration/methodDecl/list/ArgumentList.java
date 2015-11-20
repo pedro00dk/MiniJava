@@ -1,11 +1,12 @@
 package miniJava.ast.declaration.methodDecl.list;
 
+import miniJava.ast.Node;
 import miniJava.ast.declaration.methodDecl.Argument;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ArgumentList {
+public class ArgumentList extends Node {
     private List<Argument> arguments;
 
     public ArgumentList() {
