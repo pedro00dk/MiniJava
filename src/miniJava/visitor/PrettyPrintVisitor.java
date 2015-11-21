@@ -35,11 +35,18 @@ import miniJava.ast.type.IntegerType;
 
 public class PrettyPrintVisitor extends AbstractVisitor<StringBuilder> {
 
+    private int ident;
+
+    public PrettyPrintVisitor(){
+        this.ident = 0;
+    }
+
     public StringBuilder visit(ClassDeclList cdl) {
         StringBuilder str = new StringBuilder();
         for(int i = 0; i < cdl.size(); i++){
             str.append(visit(cdl.get(i)));
             str.append("\n\n");
+            ident(str);
         }
 
         return str;
@@ -50,12 +57,25 @@ public class PrettyPrintVisitor extends AbstractVisitor<StringBuilder> {
 
         str.append("public class ");
         str.append(visit(mcd.getMainClassName()));
-        str.append("{\n\n" + "public static void main (String[] ");
-        str.append( visit(mcd.getArgs()) );
+        str.append("{\n\n");
+        this.ident++;
+        ident(str);
+        str.append("public static void main (String[] ");
+        str.append(visit(mcd.getArgs()));
         str.append(") {\n");
+        this.ident++;
+        ident(str);
         str.append(visit(mcd.getMain()));
-        str.append("\n}\n}" );
-
+        this.ident--;
+        str.setLength(str.length()-1);
+        str.append("}");
+        str.append("\n");
+        ident(str);
+        this.ident--;
+        str.setLength(str.length()-1);
+        str.append("}");
+        str.append("\n");
+        ident(str);
         return str;
     }
 
@@ -67,8 +87,14 @@ public class PrettyPrintVisitor extends AbstractVisitor<StringBuilder> {
         str.append(" extends ");
         str.append(visit(ecd.getExtendsClassName()));
         str.append("{\n");
+        this.ident++;
+        ident(str);
         str.append(visit(ecd.getAttributes()));
         str.append(visit(ecd.getMethods()));
+        str.setLength(str.length()-1);
+        str.append("}\n");
+        this.ident--;
+        ident(str);
         return str;
     }
 
@@ -77,8 +103,14 @@ public class PrettyPrintVisitor extends AbstractVisitor<StringBuilder> {
         str.append("public class ");
         str.append(visit(scd.getClassName()));
         str.append("{\n");
+        this.ident++;
+        ident(str);
         str.append(visit(scd.getAttributes()));
         str.append(visit(scd.getMethods()));
+        str.setLength(str.length()-1);
+        str.append("}\n");
+        this.ident--;
+        ident(str);
         return str;
     }
 
@@ -113,11 +145,18 @@ public class PrettyPrintVisitor extends AbstractVisitor<StringBuilder> {
         str.append("(");
         str.append(visit(md.getArguments()));
         str.append("){\n");
+        this.ident++;
+        ident(str);
         str.append(visit(md.getVariables()));
         str.append(visit(md.getArguments()));
         str.append(visit(md.getStatements()));
+        str.append("return ");
         str.append(visit(md.getReturnExpr()));
-        str.append("\n}\n");
+        str.append(";\n");
+        this.ident--;
+        ident(str);
+        str.append("}\n");
+        ident(str);
         return str;
     }
 
@@ -125,9 +164,6 @@ public class PrettyPrintVisitor extends AbstractVisitor<StringBuilder> {
         StringBuilder str = new StringBuilder();
         for(int i = 0; i< vdl.size(); i++){
             str.append(visit(vdl.get(i)));
-            if(vdl.size()-1 != i){
-                str.append(", ");
-            }
         }
         return str;
     }
@@ -137,6 +173,8 @@ public class PrettyPrintVisitor extends AbstractVisitor<StringBuilder> {
         str.append(visit(vd.getType()));
         str.append(" ");
         str.append(visit(vd.getId()));
+        str.append(";\n");
+        ident(str);
         return str;
     }
 
@@ -233,7 +271,7 @@ public class PrettyPrintVisitor extends AbstractVisitor<StringBuilder> {
     }
 
     public StringBuilder visit(IntegerLiteralExpr ile) {
-        return new StringBuilder(ile.getValue());
+        return new StringBuilder(Integer.toString(ile.getValue()));
     }
 
     public StringBuilder visit(ExpressionList e) {
@@ -272,7 +310,7 @@ public class PrettyPrintVisitor extends AbstractVisitor<StringBuilder> {
 
     public StringBuilder visit(StatementList sl) {
         StringBuilder str = new StringBuilder();
-        for(int i = 0; i < sl.size(); i++){
+        for(int i = sl.size()-1; i >= 0; i--){
             str.append(visit(sl.get(i)));
         }
         return str;
@@ -293,14 +331,21 @@ public class PrettyPrintVisitor extends AbstractVisitor<StringBuilder> {
         str.append(visit(as.getId()));
         str.append(" = ");
         str.append(visit(as.getAssign()));
+        str.append(";\n");
+        ident(str);
         return str;
     }
 
     public StringBuilder visit(BlockStmt bs) {
         StringBuilder str = new StringBuilder();
         str.append("{\n");
+        this.ident++;
+        ident(str);
         str.append(visit(bs.getStmts()));
-        str.append("\n}\n");
+        str.setLength(str.length()- 1);
+        str.append("}\n");
+        this.ident--;
+        ident(str);
         return str;
     }
 
@@ -309,10 +354,20 @@ public class PrettyPrintVisitor extends AbstractVisitor<StringBuilder> {
         str.append("if(");
         str.append(visit(is.getExpr()));
         str.append("){\n");
+        this.ident++;
+        ident(str);
         str.append(visit(is.getIfStmt()));
-        str.append("\n} else {\n");
+        str.append("\n");
+        ident(str);
+        str.setLength(str.length()- 1);
+        str.append("} else {\n");
+        ident(str);
         str.append(visit(is.getElseStmt()));
-        str.append("\n}\n");
+        str.append("\n");
+        this.ident--;
+        ident(str);
+        str.append("}\n");
+        ident(str);
         return str;
     }
 
@@ -321,6 +376,7 @@ public class PrettyPrintVisitor extends AbstractVisitor<StringBuilder> {
         str.append("System.out.println(");
         str.append(visit(ps.getExpr()));
         str.append(");\n");
+        ident(str);
         return str;
     }
 
@@ -329,8 +385,16 @@ public class PrettyPrintVisitor extends AbstractVisitor<StringBuilder> {
         str.append("while(");
         str.append(visit(ws.getExpr()));
         str.append("){\n");
+        this.ident++;
+        ident(str);
         str.append(visit(ws.getStmt()));
-        str.append("\n}\n");
+        str.append("\n");
+        this.ident--;
+        ident(str);
+        str.append("}");
+        ident(str);
+        str.append("\n");
+        ident(str);
         return str;
     }
 
@@ -348,6 +412,12 @@ public class PrettyPrintVisitor extends AbstractVisitor<StringBuilder> {
 
     public StringBuilder visit(IntegerType it) {
         return new StringBuilder("int ");
+    }
+
+    private void ident(StringBuilder str){
+        for(int i =0; i < this.ident; i++){
+            str.append("\t");
+        }
     }
 
 }
