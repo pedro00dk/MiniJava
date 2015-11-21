@@ -2,11 +2,12 @@ package miniJava.ast.declaration.classDecl.list;
 
 import miniJava.ast.Node;
 import miniJava.ast.declaration.classDecl.ClassDecl;
+import miniJava.visitor.Visitor;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ClassDeclList extends Node {
+public class ClassDeclList implements Node {
     private List<ClassDecl> classes;
 
     public ClassDeclList() {
@@ -23,5 +24,10 @@ public class ClassDeclList extends Node {
 
     public int size() {
         return this.classes.size();
+    }
+
+    @Override
+    public <R> R accept(Visitor<R> visitor) {
+        return visitor.visit(this);
     }
 }

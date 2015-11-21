@@ -3,8 +3,9 @@ package miniJava.ast.declaration.classDecl.main;
 import miniJava.ast.Node;
 import miniJava.ast.identifier.Identifier;
 import miniJava.ast.statement.list.StatementList;
+import miniJava.visitor.Visitor;
 
-public class MainClassDecl extends Node {
+public class MainClassDecl implements Node {
     private Identifier mainClassName;
     private Identifier args;
     private StatementList main;
@@ -25,6 +26,11 @@ public class MainClassDecl extends Node {
 
     public StatementList getMain() {
         return main;
+    }
+
+    @Override
+    public <R> R accept(Visitor<R> visitor) {
+        return visitor.visit(this);
     }
 }
 

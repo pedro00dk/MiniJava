@@ -1,8 +1,9 @@
 package miniJava.ast.statement;
 
 import miniJava.ast.expression.Expression;
+import miniJava.visitor.Visitor;
 
-public class IfStmt extends Statement {
+public class IfStmt implements Statement {
     private Expression expr;
     private Statement ifStmt;
     private Statement elseStmt;
@@ -23,6 +24,11 @@ public class IfStmt extends Statement {
 
     public Statement getElseStmt() {
         return elseStmt;
+    }
+
+    @Override
+    public <R> R accept(Visitor<R> visitor) {
+        return visitor.visit(this);
     }
 }
 

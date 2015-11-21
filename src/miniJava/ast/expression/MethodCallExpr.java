@@ -2,8 +2,9 @@ package miniJava.ast.expression;
 
 import miniJava.ast.expression.list.ExpressionList;
 import miniJava.ast.identifier.Identifier;
+import miniJava.visitor.Visitor;
 
-public class MethodCallExpr extends Expression {
+public class MethodCallExpr implements Expression {
     private Expression object;
     private Identifier method;
     private ExpressionList params;
@@ -24,5 +25,10 @@ public class MethodCallExpr extends Expression {
 
     public ExpressionList getParams() {
         return params;
+    }
+
+    @Override
+    public <R> R accept(Visitor<R> visitor) {
+        return visitor.visit(this);
     }
 }

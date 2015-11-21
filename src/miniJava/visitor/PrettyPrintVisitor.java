@@ -32,126 +32,130 @@ import miniJava.ast.type.IdentifierType;
 import miniJava.ast.type.IntArrayType;
 import miniJava.ast.type.IntegerType;
 
-
 public class PrettyPrintVisitor extends AbstractVisitor<StringBuilder> {
 
     private int ident;
 
-    public PrettyPrintVisitor(){
+    public PrettyPrintVisitor() {
         this.ident = 0;
     }
 
+    @Override
     public StringBuilder visit(ClassDeclList cdl) {
         StringBuilder str = new StringBuilder();
-        for(int i = 0; i < cdl.size(); i++){
-            str.append(visit(cdl.get(i)));
+        for (int i = 0; i < cdl.size(); i++) {
+            str.append(cdl.get(i).accept(this));
             str.append("\n\n");
             ident(str);
         }
-
         return str;
     }
 
+    @Override
     public StringBuilder visit(MainClassDecl mcd) {
         StringBuilder str = new StringBuilder();
-
         str.append("public class ");
-        str.append(visit(mcd.getMainClassName()));
+        str.append(mcd.getMainClassName().accept(this));
         str.append("{\n\n");
         this.ident++;
         ident(str);
         str.append("public static void main (String[] ");
-        str.append(visit(mcd.getArgs()));
+        str.append(mcd.getArgs().accept(this));
         str.append(") {\n");
         this.ident++;
         ident(str);
-        str.append(visit(mcd.getMain()));
+        str.append(mcd.getMain().accept(this));
         this.ident--;
-        str.setLength(str.length()-1);
+        str.setLength(str.length() - 1);
         str.append("}");
         str.append("\n");
         ident(str);
         this.ident--;
-        str.setLength(str.length()-1);
+        str.setLength(str.length() - 1);
         str.append("}");
         str.append("\n");
         ident(str);
         return str;
     }
 
+    @Override
     public StringBuilder visit(ExtendedClassDecl ecd) {
-
         StringBuilder str = new StringBuilder();
         str.append("public class ");
-        str.append(visit(ecd.getClassName()));
+        str.append(ecd.getClassName().accept(this));
         str.append(" extends ");
-        str.append(visit(ecd.getExtendsClassName()));
+        str.append(ecd.getExtendsClassName().accept(this));
         str.append("{\n");
         this.ident++;
         ident(str);
-        str.append(visit(ecd.getAttributes()));
-        str.append(visit(ecd.getMethods()));
-        str.setLength(str.length()-1);
+        str.append(ecd.getAttributes().accept(this));
+        str.append(ecd.getMethods().accept(this));
+        str.setLength(str.length() - 1);
         str.append("}\n");
         this.ident--;
         ident(str);
         return str;
     }
 
+    @Override
     public StringBuilder visit(SimpleClassDecl scd) {
         StringBuilder str = new StringBuilder();
         str.append("public class ");
-        str.append(visit(scd.getClassName()));
+        str.append(scd.getClassName().accept(this));
         str.append("{\n");
         this.ident++;
         ident(str);
-        str.append(visit(scd.getAttributes()));
-        str.append(visit(scd.getMethods()));
-        str.setLength(str.length()-1);
+        str.append(scd.getAttributes().accept(this));
+        str.append(scd.getMethods().accept(this));
+        str.setLength(str.length() - 1);
         str.append("}\n");
         this.ident--;
         ident(str);
         return str;
     }
 
+    @Override
     public StringBuilder visit(ArgumentList al) {
         StringBuilder str = new StringBuilder();
-        for(int i = 0; i < al.size(); i++){
-            str.append(visit(al.get(i)));
+        for (int i = 0; i < al.size(); i++) {
+            str.append(al.get(i).accept(this));
         }
         return str;
     }
 
+    @Override
     public StringBuilder visit(MethodDeclList mdl) {
         StringBuilder str = new StringBuilder();
-        for(int i = 0; i < mdl.size(); i++){
-            str.append(visit(mdl.get(i)));
+        for (int i = 0; i < mdl.size(); i++) {
+            str.append(mdl.get(i).accept(this));
         }
         return str;
     }
 
+    @Override
     public StringBuilder visit(Argument a) {
         StringBuilder str = new StringBuilder();
-        str.append(visit(a.getType()));
-        str.append(visit(a.getName()));
+        str.append(a.getType().accept(this));
+        str.append(a.getName().accept(this));
         return str;
     }
 
+    @Override
     public StringBuilder visit(MethodDecl md) {
         StringBuilder str = new StringBuilder();
         str.append("public ");
-        str.append(visit(md.getReturnType()));
-        str.append(visit(md.getName()));
+        str.append(md.getReturnType().accept(this));
+        str.append(md.getName().accept(this));
         str.append("(");
-        str.append(visit(md.getArguments()));
+        str.append(md.getArguments().accept(this));
         str.append("){\n");
         this.ident++;
         ident(str);
-        str.append(visit(md.getVariables()));
-        str.append(visit(md.getArguments()));
-        str.append(visit(md.getStatements()));
+        str.append(md.getVariables().accept(this));
+        str.append(md.getArguments().accept(this));
+        str.append(md.getStatements().accept(this));
         str.append("return ");
-        str.append(visit(md.getReturnExpr()));
+        str.append(md.getReturnExpr().accept(this));
         str.append(";\n");
         this.ident--;
         ident(str);
@@ -160,209 +164,242 @@ public class PrettyPrintVisitor extends AbstractVisitor<StringBuilder> {
         return str;
     }
 
+    @Override
     public StringBuilder visit(VarDeclList vdl) {
         StringBuilder str = new StringBuilder();
-        for(int i = 0; i< vdl.size(); i++){
-            str.append(visit(vdl.get(i)));
+        for (int i = 0; i < vdl.size(); i++) {
+            str.append(vdl.get(i).accept(this));
         }
         return str;
     }
 
+    @Override
     public StringBuilder visit(VarDecl vd) {
         StringBuilder str = new StringBuilder();
-        str.append(visit(vd.getType()));
+        str.append(vd.getType().accept(this));
         str.append(" ");
-        str.append(visit(vd.getId()));
+        str.append(vd.getId().accept(this));
         str.append(";\n");
         ident(str);
         return str;
     }
 
+    @Override
     public StringBuilder visit(ArrayLengthExpr ale) {
         StringBuilder str = new StringBuilder();
-        str.append(visit(ale.getArray()));
+        str.append(ale.getArray().accept(this));
         str.append(".length");
         return str;
     }
 
+    @Override
     public StringBuilder visit(ArrayLookupExpr ale) {
         StringBuilder str = new StringBuilder();
-        str.append(visit(ale.getArray()));
+        str.append(ale.getArray().accept(this));
         str.append("[");
-        str.append(visit(ale.getIndex()));
+        str.append(ale.getIndex().accept(this));
         str.append("]");
         return str;
     }
 
+    @Override
     public StringBuilder visit(NewArrayExpr nae) {
         StringBuilder str = new StringBuilder();
         str.append("new int[");
-        str.append(visit(nae.getExpr()));
+        str.append(nae.getExpr().accept(this));
         str.append("]");
         return str;
     }
 
+    @Override
     public StringBuilder visit(BinaryBooleanExpr bbe) {
         StringBuilder str = new StringBuilder();
-        str.append(visit(bbe.getExpr1()));
-        switch (bbe.getOp()){
-
-            case AND: str.append(" && ");
+        str.append(bbe.getExpr1().accept(this));
+        switch (bbe.getOp()) {
+            case AND:
+                str.append(" && ");
                 break;
-            case OR: str.append(" || ");
+            case OR:
+                str.append(" || ");
                 break;
-            case EQUALS: str.append(" == ");
+            case EQUALS:
+                str.append(" == ");
                 break;
-            case DIFF: str.append(" != ");
+            case DIFF:
+                str.append(" != ");
                 break;
-            case LESS: str.append(" < ");
+            case LESS:
+                str.append(" < ");
                 break;
-            case LESS_THAN: str.append(" <= ");
+            case LESS_THAN:
+                str.append(" <= ");
                 break;
-            case GREATER: str.append(" > ");
+            case GREATER:
+                str.append(" > ");
                 break;
-            case GREATER_THAN: str.append(" >= ");
+            case GREATER_THAN:
+                str.append(" >= ");
                 break;
         }
-        str.append(visit(bbe.getExpr2()));
+        str.append(bbe.getExpr2().accept(this));
         return str;
     }
 
+    @Override
     public StringBuilder visit(BooleanLiteralExpr ble) {
         return new StringBuilder(Boolean.toString(ble.isValue()));
     }
 
+    @Override
     public StringBuilder visit(UnaryBooleanExpr ube) {
         StringBuilder str = new StringBuilder();
         str.append("!");
-        str.append(visit(ube.getExpr()));
+        str.append(ube.getExpr().accept(this));
         return str;
     }
 
+    @Override
     public StringBuilder visit(IdentifierExpr ie) {
-        return new StringBuilder(visit(ie.getId()));
+        return new StringBuilder(ie.getId().accept(this));
     }
 
+    @Override
     public StringBuilder visit(NewObjectExpr noe) {
         StringBuilder str = new StringBuilder();
         str.append("new ");
-        str.append(visit(noe.getId()));
+        str.append(noe.getId().accept(this));
         return str;
     }
 
+    @Override
     public StringBuilder visit(BinaryIntegerExpr bie) {
         StringBuilder str = new StringBuilder();
-        str.append(visit(bie.getExpr1()));
-        switch (bie.getOp()){
-            case PLUS: str.append(" + ");
+        str.append(bie.getExpr1().accept(this));
+        switch (bie.getOp()) {
+            case PLUS:
+                str.append(" + ");
                 break;
-
-            case MINUS: str.append(" - ");
+            case MINUS:
+                str.append(" - ");
                 break;
-            case MUL: str.append(" * ");
+            case MUL:
+                str.append(" * ");
                 break;
-            case DIV: str.append(" / ");
+            case DIV:
+                str.append(" / ");
                 break;
-            case MOD: str.append(" % ");
+            case MOD:
+                str.append(" % ");
                 break;
         }
-        str.append(visit(bie.getExpr2()));
+        str.append(bie.getExpr2().accept(this));
         return str;
     }
 
+    @Override
     public StringBuilder visit(IntegerLiteralExpr ile) {
         return new StringBuilder(Integer.toString(ile.getValue()));
     }
 
+    @Override
     public StringBuilder visit(ExpressionList e) {
         StringBuilder str = new StringBuilder();
-        for(int i = 0; i < e.size(); i++){
-            str.append(visit(e.get(i)));
+        for (int i = 0; i < e.size(); i++) {
+            str.append(e.get(i).accept(this));
         }
         return str;
     }
 
+    @Override
     public StringBuilder visit(MethodCallExpr mce) {
         StringBuilder str = new StringBuilder();
-        str.append(visit(mce.getObject()));
+        str.append(mce.getObject().accept(this));
         str.append(".");
-        str.append(visit(mce.getMethod()));
+        str.append(mce.getMethod().accept(this));
         str.append("(");
-        str.append(visit(mce.getParams()));
+        str.append(mce.getParams().accept(this));
         str.append(")");
         return str;
     }
 
+    @Override
     public StringBuilder visit(ThisExpr te) {
         return new StringBuilder("this");
     }
 
+    @Override
     public StringBuilder visit(Identifier id) {
         return new StringBuilder(id.getName());
     }
 
+    @Override
     public StringBuilder visit(Program p) {
         StringBuilder str = new StringBuilder();
-        str.append(visit(p.getMainClass()));
-        str.append(visit(p.getClasses()));
+        str.append(p.getMainClass().accept(this));
+        str.append(p.getClasses().accept(this));
         return str;
     }
 
+    @Override
     public StringBuilder visit(StatementList sl) {
         StringBuilder str = new StringBuilder();
-        for(int i = sl.size()-1; i >= 0; i--){
-            str.append(visit(sl.get(i)));
+        for (int i = sl.size() - 1; i >= 0; i--) {
+            str.append(sl.get(i).accept(this));
         }
         return str;
     }
 
+    @Override
     public StringBuilder visit(ArrayAssignStmt aas) {
         StringBuilder str = new StringBuilder();
-        str.append(visit(aas.getArray()));
+        str.append(aas.getArray().accept(this));
         str.append("[");
-        str.append(visit(aas.getIndex()));
+        str.append(aas.getIndex().accept(this));
         str.append("] = ");
-        str.append(visit(aas.getAssign()));
+        str.append(aas.getAssign().accept(this));
         return str;
     }
 
+    @Override
     public StringBuilder visit(AssignStmt as) {
         StringBuilder str = new StringBuilder();
-        str.append(visit(as.getId()));
+        str.append(as.getId().accept(this));
         str.append(" = ");
-        str.append(visit(as.getAssign()));
+        str.append(as.getAssign().accept(this));
         str.append(";\n");
         ident(str);
         return str;
     }
 
+    @Override
     public StringBuilder visit(BlockStmt bs) {
         StringBuilder str = new StringBuilder();
         str.append("{\n");
         this.ident++;
         ident(str);
-        str.append(visit(bs.getStmts()));
-        str.setLength(str.length()- 1);
+        str.append(bs.getStmts().accept(this));
+        str.setLength(str.length() - 1);
         str.append("}\n");
         this.ident--;
         ident(str);
         return str;
     }
 
+    @Override
     public StringBuilder visit(IfStmt is) {
         StringBuilder str = new StringBuilder();
         str.append("if(");
-        str.append(visit(is.getExpr()));
+        str.append(is.getExpr().accept(this));
         str.append("){\n");
         this.ident++;
         ident(str);
-        str.append(visit(is.getIfStmt()));
+        str.append(is.getIfStmt().accept(this));
         str.append("\n");
         ident(str);
-        str.setLength(str.length()- 1);
+        str.setLength(str.length() - 1);
         str.append("} else {\n");
         ident(str);
-        str.append(visit(is.getElseStmt()));
+        str.append(is.getElseStmt().accept(this));
         str.append("\n");
         this.ident--;
         ident(str);
@@ -371,23 +408,25 @@ public class PrettyPrintVisitor extends AbstractVisitor<StringBuilder> {
         return str;
     }
 
+    @Override
     public StringBuilder visit(PrintStmt ps) {
         StringBuilder str = new StringBuilder();
         str.append("System.out.println(");
-        str.append(visit(ps.getExpr()));
+        str.append(ps.getExpr().accept(this));
         str.append(");\n");
         ident(str);
         return str;
     }
 
+    @Override
     public StringBuilder visit(WhileStmt ws) {
         StringBuilder str = new StringBuilder();
         str.append("while(");
-        str.append(visit(ws.getExpr()));
+        str.append(ws.getExpr().accept(this));
         str.append("){\n");
         this.ident++;
         ident(str);
-        str.append(visit(ws.getStmt()));
+        str.append(ws.getStmt().accept(this));
         str.append("\n");
         this.ident--;
         ident(str);
@@ -398,26 +437,29 @@ public class PrettyPrintVisitor extends AbstractVisitor<StringBuilder> {
         return str;
     }
 
+    @Override
     public StringBuilder visit(BooleanType bt) {
         return new StringBuilder("boolean ");
     }
 
+    @Override
     public StringBuilder visit(IdentifierType it) {
-        return new StringBuilder(visit(it.getId()));
+        return new StringBuilder(it.getId().accept(this));
     }
 
+    @Override
     public StringBuilder visit(IntArrayType iat) {
         return new StringBuilder("int[] ");
     }
 
+    @Override
     public StringBuilder visit(IntegerType it) {
         return new StringBuilder("int ");
     }
 
-    private void ident(StringBuilder str){
-        for(int i =0; i < this.ident; i++){
+    private void ident(StringBuilder str) {
+        for (int i = 0; i < this.ident; i++) {
             str.append("\t");
         }
     }
-
 }

@@ -1,8 +1,9 @@
 package miniJava.ast.statement;
 
 import miniJava.ast.expression.Expression;
+import miniJava.visitor.Visitor;
 
-public class PrintStmt extends Statement {
+public class PrintStmt implements Statement {
     private Expression expr;
 
     public PrintStmt(Expression expr) {
@@ -11,5 +12,10 @@ public class PrintStmt extends Statement {
 
     public Expression getExpr() {
         return expr;
+    }
+
+    @Override
+    public <R> R accept(Visitor<R> visitor) {
+        return visitor.visit(this);
     }
 }

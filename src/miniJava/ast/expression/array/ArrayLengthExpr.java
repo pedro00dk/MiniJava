@@ -1,8 +1,9 @@
 package miniJava.ast.expression.array;
 
 import miniJava.ast.expression.Expression;
+import miniJava.visitor.Visitor;
 
-public class ArrayLengthExpr extends Expression {
+public class ArrayLengthExpr implements Expression {
     private Expression array;
 
     public ArrayLengthExpr(Expression array) {
@@ -11,5 +12,10 @@ public class ArrayLengthExpr extends Expression {
 
     public Expression getArray() {
         return array;
+    }
+
+    @Override
+    public <R> R accept(Visitor<R> visitor) {
+        return visitor.visit(this);
     }
 }

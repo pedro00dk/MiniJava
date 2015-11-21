@@ -2,11 +2,12 @@ package miniJava.ast.expression.list;
 
 import miniJava.ast.Node;
 import miniJava.ast.expression.Expression;
+import miniJava.visitor.Visitor;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ExpressionList extends Node {
+public class ExpressionList implements Node {
     private List<Expression> expressions;
 
     public ExpressionList() {
@@ -23,5 +24,10 @@ public class ExpressionList extends Node {
 
     public int size() {
         return this.expressions.size();
+    }
+
+    @Override
+    public <R> R accept(Visitor<R> visitor) {
+        return visitor.visit(this);
     }
 }

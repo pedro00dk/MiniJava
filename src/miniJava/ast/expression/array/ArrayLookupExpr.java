@@ -1,8 +1,9 @@
 package miniJava.ast.expression.array;
 
 import miniJava.ast.expression.Expression;
+import miniJava.visitor.Visitor;
 
-public class ArrayLookupExpr extends Expression {
+public class ArrayLookupExpr implements Expression {
     private Expression array;
     private Expression index;
 
@@ -17,5 +18,10 @@ public class ArrayLookupExpr extends Expression {
 
     public Expression getIndex() {
         return index;
+    }
+
+    @Override
+    public <R> R accept(Visitor<R> visitor) {
+        return visitor.visit(this);
     }
 }

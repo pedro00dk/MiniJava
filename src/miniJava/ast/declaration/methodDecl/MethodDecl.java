@@ -7,8 +7,9 @@ import miniJava.ast.expression.Expression;
 import miniJava.ast.identifier.Identifier;
 import miniJava.ast.statement.list.StatementList;
 import miniJava.ast.type.Type;
+import miniJava.visitor.Visitor;
 
-public class MethodDecl extends Node {
+public class MethodDecl implements Node {
     private Type returnType;
     private Identifier name;
     private ArgumentList arguments;
@@ -47,5 +48,10 @@ public class MethodDecl extends Node {
 
     public Expression getReturnExpr() {
         return returnExpr;
+    }
+
+    @Override
+    public <R> R accept(Visitor<R> visitor) {
+        return visitor.visit(this);
     }
 }

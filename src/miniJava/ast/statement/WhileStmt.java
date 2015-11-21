@@ -1,8 +1,9 @@
 package miniJava.ast.statement;
 
 import miniJava.ast.expression.Expression;
+import miniJava.visitor.Visitor;
 
-public class WhileStmt extends Statement {
+public class WhileStmt implements Statement {
     private Expression expr;
     private Statement stmt;
 
@@ -17,6 +18,11 @@ public class WhileStmt extends Statement {
 
     public Statement getStmt() {
         return stmt;
+    }
+
+    @Override
+    public <R> R accept(Visitor<R> visitor) {
+        return visitor.visit(this);
     }
 }
 

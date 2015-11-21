@@ -2,8 +2,9 @@ package miniJava.ast.statement;
 
 import miniJava.ast.expression.Expression;
 import miniJava.ast.identifier.Identifier;
+import miniJava.visitor.Visitor;
 
-public class AssignStmt extends Statement {
+public class AssignStmt implements Statement {
     private Identifier id;
     private Expression assign;
 
@@ -18,6 +19,11 @@ public class AssignStmt extends Statement {
 
     public Expression getAssign() {
         return assign;
+    }
+
+    @Override
+    public <R> R accept(Visitor<R> visitor) {
+        return visitor.visit(this);
     }
 }
 

@@ -1,8 +1,9 @@
 package miniJava.ast.expression.integer;
 
 import miniJava.ast.expression.Expression;
+import miniJava.visitor.Visitor;
 
-public class BinaryIntegerExpr extends Expression {
+public class BinaryIntegerExpr implements Expression {
     private Expression expr1;
     private Expression expr2;
     private BinaryIntegerOperation op;
@@ -27,5 +28,10 @@ public class BinaryIntegerExpr extends Expression {
 
     public BinaryIntegerOperation getOp() {
         return op;
+    }
+
+    @Override
+    public <R> R accept(Visitor<R> visitor) {
+        return visitor.visit(this);
     }
 }

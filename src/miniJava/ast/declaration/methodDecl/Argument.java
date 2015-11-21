@@ -3,8 +3,9 @@ package miniJava.ast.declaration.methodDecl;
 import miniJava.ast.Node;
 import miniJava.ast.identifier.Identifier;
 import miniJava.ast.type.Type;
+import miniJava.visitor.Visitor;
 
-public class Argument extends Node {
+public class Argument implements Node {
     private Type type;
     private Identifier name;
 
@@ -19,5 +20,10 @@ public class Argument extends Node {
 
     public Identifier getName() {
         return name;
+    }
+
+    @Override
+    public <R> R accept(Visitor<R> visitor) {
+        return visitor.visit(this);
     }
 }

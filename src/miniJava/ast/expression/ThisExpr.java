@@ -1,4 +1,11 @@
 package miniJava.ast.expression;
 
-public class ThisExpr extends Expression {
+import miniJava.visitor.Visitor;
+
+public class ThisExpr implements Expression {
+
+    @Override
+    public <R> R accept(Visitor<R> visitor) {
+        return visitor.visit(this);
+    }
 }

@@ -2,11 +2,12 @@ package miniJava.ast.statement.list;
 
 import miniJava.ast.Node;
 import miniJava.ast.statement.Statement;
+import miniJava.visitor.Visitor;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class StatementList extends Node {
+public class StatementList implements Node {
     private List<Statement> statements;
 
     public StatementList() {
@@ -23,5 +24,10 @@ public class StatementList extends Node {
 
     public int size() {
         return this.statements.size();
+    }
+
+    @Override
+    public <R> R accept(Visitor<R> visitor) {
+        return visitor.visit(this);
     }
 }

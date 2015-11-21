@@ -1,8 +1,9 @@
 package miniJava.ast.expression.array;
 
 import miniJava.ast.expression.Expression;
+import miniJava.visitor.Visitor;
 
-public class NewArrayExpr extends Expression {
+public class NewArrayExpr implements Expression {
     private Expression expr;
 
     public NewArrayExpr(Expression expr) {
@@ -11,5 +12,10 @@ public class NewArrayExpr extends Expression {
 
     public Expression getExpr() {
         return expr;
+    }
+
+    @Override
+    public <R> R accept(Visitor<R> visitor) {
+        return visitor.visit(this);
     }
 }

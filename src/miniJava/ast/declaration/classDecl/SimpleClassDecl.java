@@ -3,8 +3,9 @@ package miniJava.ast.declaration.classDecl;
 import miniJava.ast.declaration.methodDecl.list.MethodDeclList;
 import miniJava.ast.declaration.varDecl.list.VarDeclList;
 import miniJava.ast.identifier.Identifier;
+import miniJava.visitor.Visitor;
 
-public class SimpleClassDecl extends ClassDecl {
+public class SimpleClassDecl implements ClassDecl {
     private Identifier className;
     private VarDeclList attributes;
     private MethodDeclList methods;
@@ -25,5 +26,10 @@ public class SimpleClassDecl extends ClassDecl {
 
     public MethodDeclList getMethods() {
         return methods;
+    }
+
+    @Override
+    public <R> R accept(Visitor<R> visitor) {
+        return visitor.visit(this);
     }
 }

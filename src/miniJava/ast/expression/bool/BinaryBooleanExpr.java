@@ -1,8 +1,9 @@
 package miniJava.ast.expression.bool;
 
 import miniJava.ast.expression.Expression;
+import miniJava.visitor.Visitor;
 
-public class BinaryBooleanExpr extends Expression {
+public class BinaryBooleanExpr implements Expression {
     private Expression expr1;
     private Expression expr2;
     private BinaryBooleanOperation op;
@@ -27,5 +28,10 @@ public class BinaryBooleanExpr extends Expression {
 
     public BinaryBooleanOperation getOp() {
         return op;
+    }
+
+    @Override
+    public <R> R accept(Visitor<R> visitor) {
+        return visitor.visit(this);
     }
 }
