@@ -29,6 +29,10 @@ public class Method {
         return type;
     }
 
+    public List<Variable> getParams() {
+        return params;
+    }
+
     public boolean addParam(String name, Type type) {
         if (containsParam(name)) return false;
         this.params.add(new Variable(name, type));

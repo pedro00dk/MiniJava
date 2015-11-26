@@ -24,6 +24,10 @@ public class BuildSymbolTableVisitor extends AbstractVisitor<Void> {
         this.table = new SymbolTable();
     }
 
+    public SymbolTable getTable() {
+        return table;
+    }
+
     @Override
     public Void visit(ClassDeclList cdl) {
         for (int i = 0; i < cdl.size(); i++) cdl.get(i).accept(this);
