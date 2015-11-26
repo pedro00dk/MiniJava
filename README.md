@@ -31,3 +31,9 @@ léxica.
 
 O analisador sintático foi criado usando a biblioteca Java CUP, e foi integrado com o JFlex para usar
 os tokens lidos pelo analizador léxico.
+A arvore sintática abstrata foi gerrada pelo parser e é usada para imprimir e verificar o programa.
+
+##Analise semántica
+
+Na analise semantica é feito o type checking usando visitors, onde um visitor gera uma tabela de símbolos
+e essa tabela é usada por outro visitor para verificação dos tipos de dados na estrutura.
