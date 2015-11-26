@@ -1,13 +1,17 @@
+import miniJava.ast.Node;
 import miniJava.ast.program.Program;
 import miniJava.parser.Parser;
 import miniJava.util.Gen;
+import miniJava.visitor.TypeCheckVisitor.BuildSymbolTableVisitor;
+import miniJava.visitor.TypeCheckVisitor.TypeCheckVisitor;
 
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class Main {
 
-    // Caminho para as especificações do lexer a parser
+    // Caminho para as especificaï¿½ï¿½es do lexer a parser
     public static final Path LEXER_SPEC_PATH = Paths.get("src\\miniJava\\lexer\\LexerSpec.flex");
     public static final Path PARSER_SPEC_PATH = Paths.get("src\\miniJava\\parser\\ParserSpec.cup");
 
@@ -20,16 +24,16 @@ public class Main {
         //gen();
 
         // Testando arquivos
-        Program binarySearhProgram = (Program) new Parser(Paths.get("test\\binarysearch.java.txt")).parse().value;
+        for (Path p: Files.newDirectoryStream(TEST_FILES_DIR)) {
+            Node program = (Node) new Parser(p).parse().value;
 
-        /**
-        new Parser(Paths.get("test\\bubblesort.java.txt")).parse();
-        new Parser(Paths.get("test\\factorial.java.txt")).parse();
-        new Parser(Paths.get("test\\linearsearch.java.txt")).parse();
-        new Parser(Paths.get("test\\quicksort.java.txt")).parse();
-        new Parser(Paths.get("test\\binarytree.java.txt")).parse();
-        new Parser(Paths.get("test\\linkedlist.java.txt")).parse();
-        //*/
+            BuildSymbolTableVisitor bstvisitor  = new BuildSymbolTableVisitor();
+            program.accept(bstvisitor);
+
+            TypeCheckVisitor tcvisitor = new TypeCheckVisitor(bstvisitor.getTable());
+            program.accept(tcvisitor);
+            for (String error: tcvisitor.getErrors()) System.out.println(error);
+        }
     }
 
     /**
